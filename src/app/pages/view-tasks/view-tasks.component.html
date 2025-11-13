@@ -1,0 +1,60 @@
+<section class="view-tasks">
+  <h2>Scheduled Tasks</h2>
+  <table mat-table [dataSource]="tasks" class="mat-elevation-z2" *ngIf="tasks.length > 0">
+    <ng-container matColumnDef="subject">
+      <th mat-header-cell *matHeaderCellDef>Subject</th>
+      <td mat-cell *matCellDef="let task">{{ task.subject }}</td>
+    </ng-container>
+    <ng-container matColumnDef="priority">
+      <th mat-header-cell *matHeaderCellDef>Priority</th>
+      <td mat-cell *matCellDef="let task">{{ task.priority }}</td>
+    </ng-container>
+    <ng-container matColumnDef="timeNeeded">
+      <th mat-header-cell *matHeaderCellDef>Time Needed (hrs)</th>
+      <td mat-cell *matCellDef="let task">{{ task.timeNeeded }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let task">
+        <button mat-icon-button color="primary" (click)="editTask(task.id)" aria-label="Edit">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteTask(task.id)" aria-label="Delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="markCompleted(task.id)" aria-label="Mark as completed">
+          <mat-icon>check_circle</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <div *ngIf="tasks.length === 0" class="no-tasks">
+    <p>No active tasks. Add a new task to get started!</p>
+  </div>
+</section>
+
+<style>
+.view-tasks {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: var(--background, #fff);
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 2rem 2.5rem;
+}
+.view-tasks h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.mat-table {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.no-tasks {
+  text-align: center;
+  color: #888;
+  margin-top: 2rem;
+}
+</style>

@@ -1,0 +1,69 @@
+<section class="edit-task">
+  <h2>Edit Task</h2>
+  <div *ngIf="notFound" class="not-found">
+    <p>Task not found.</p>
+  </div>
+  <form *ngIf="!notFound" [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="edit-task-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Subject</mat-label>
+      <input matInput formControlName="subject" required />
+      <mat-error *ngIf="taskForm.get('subject')?.hasError('required')">
+        Subject is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Priority (lower = more important)</mat-label>
+      <input matInput type="number" formControlName="priority" min="1" required />
+      <mat-error *ngIf="taskForm.get('priority')?.hasError('required')">
+        Priority is required
+      </mat-error>
+      <mat-error *ngIf="taskForm.get('priority')?.hasError('min')">
+        Priority must be at least 1
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Time Needed (hours)</mat-label>
+      <input matInput type="number" formControlName="timeNeeded" min="1" required />
+      <mat-error *ngIf="taskForm.get('timeNeeded')?.hasError('required')">
+        Time needed is required
+      </mat-error>
+      <mat-error *ngIf="taskForm.get('timeNeeded')?.hasError('min')">
+        Time needed must be at least 1 hour
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="!taskForm.valid">
+      Save Changes
+    </button>
+  </form>
+</section>
+
+<style>
+.edit-task {
+  max-width: 400px;
+  margin: 2rem auto;
+  background: var(--background, #fff);
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 2rem 2.5rem;
+}
+.edit-task h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.edit-task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.full-width {
+  width: 100%;
+}
+.not-found {
+  text-align: center;
+  color: #c00;
+  font-weight: 500;
+}
+</style>
